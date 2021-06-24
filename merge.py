@@ -66,12 +66,6 @@ def main():
     columns = responses['sheets']['values'][0]
     records = responses['sheets']['values'][1:]
 
-    print('The title of the document is: {}'.format(document.get('title')))
-
-    print('The title of the sheet is: {}'.format(sheet.get('title')))
-
-    print(columns, records)
-
     # Iterate and perform mail merge
 
     def mapping(merge_field, value=''):
@@ -86,11 +80,11 @@ def main():
                 }
         return json_representation
 
-    for record in records:
-        print('Processing record {0}...'.format(record[0]))
+    for i, record in enumerate(records, start=1):
+        print('Processing record {0}...'.format(i))
 
         # copy template doc file as new file
-        document_title = '{0}_contract'.format(record[0])
+        document_title = f'{record[0]}_{record[1]}_contract'
 
         responses['docs'] = service_DRIVE.files().copy(
                 fileId=TEMPLATE_DOCUMENT_ID,
